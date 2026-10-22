@@ -1,0 +1,87 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Dogtiti DSH plugins",
+    "zh": "Dogtiti 的 DSH 插件"
+  },
+  "description": {
+    "en": "DeepSeek Harness plugins maintained by Dogtiti.",
+    "zh": "Dogtiti 维护的 DeepSeek Harness 插件。"
+  },
+  "metadata": {
+    "categories": {
+      "composer": {
+        "title": {
+          "en": "Composer",
+          "zh": "输入框"
+        }
+      }
+    },
+    "labels": {
+      "extra-model-calls": {
+        "title": {
+          "en": "Makes extra model calls",
+          "zh": "会产生额外模型调用"
+        }
+      }
+    },
+    "sortKeys": {
+      "stars": {
+        "title": {
+          "en": "GitHub stars",
+          "zh": "GitHub 星标"
+        },
+        "order": "desc"
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-composer-predict",
+      "title": {
+        "en": "Composer Prediction",
+        "zh": "下一步指令建议"
+      },
+      "description": {
+        "en": "Predicts your next instruction from the current conversation and shows it as the composer placeholder; Tab turns it into an editable draft. One extra small model call per completed turn.",
+        "zh": "根据当前对话预测你的下一条指令，直接显示成输入框里的占位文字，按 Tab 采纳为可编辑的草稿。每轮会多一次很小的模型调用。"
+      },
+      "icon": "icon.svg",
+      "author": "Dogtiti",
+      "homepage": "https://github.com/Dogtiti/dsh-composer-predict#readme",
+      "repository": {
+        "url": "https://github.com/Dogtiti/dsh-composer-predict"
+      },
+      "metadata": {
+        "category": "composer",
+        "keywords": [
+          "composer",
+          "prediction",
+          "suggestion",
+          "tab",
+          "autocomplete"
+        ],
+        "labels": [
+          "extra-model-calls"
+        ],
+        "sortKeys": {
+          "stars": 0
+        }
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "publishTimestamp": 1792664221,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Dogtiti/dsh-composer-predict",
+            "commit": "ef122c246fdad6ad3e1ec4ad7b0b4c2b6165dee9"
+          },
+          "engines": {
+            "dsh": "^0.2.1-0"
+          }
+        }
+      ]
+    }
+  ]
+}
