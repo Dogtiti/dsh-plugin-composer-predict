@@ -162,6 +162,7 @@ node --test "test/*.test.mjs"
 
 | 插件 | 说明 |
 | --- | --- |
+| **dsh-plugin-composer-predict**（本仓库） | 预测下一条指令并显示为占位文字，`Tab` 采纳 |
 | [dsh-plugin-composer-history](https://github.com/Dogtiti/dsh-plugin-composer-history) | 输入框中按 `↑` / `↓` 回填历史消息 |
 
 ## 许可
