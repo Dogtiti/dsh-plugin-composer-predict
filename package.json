@@ -1,5 +1,5 @@
 {
-  "name": "dsh-composer-predict",
+  "name": "dsh-plugin-composer-predict",
   "version": "1.0.0",
   "type": "module",
   "description": "Predicts your next instruction from the current conversation and shows it as the composer placeholder; press Tab to turn it into an editable draft.",
@@ -13,10 +13,10 @@
   ],
   "author": "Dogtiti",
   "license": "MIT",
-  "homepage": "https://github.com/Dogtiti/dsh-composer-predict#readme",
+  "homepage": "https://github.com/Dogtiti/dsh-plugin-composer-predict#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Dogtiti/dsh-composer-predict"
+    "url": "https://github.com/Dogtiti/dsh-plugin-composer-predict"
   },
   "exports": {
     ".": "./index.js",

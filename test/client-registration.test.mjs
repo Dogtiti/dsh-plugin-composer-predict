@@ -94,7 +94,7 @@ function render(overrides = {}) {
 }
 
 test('registers one composer dock entry', () => {
-  assert.equal(registration.id, 'dsh-composer-predict')
+  assert.equal(registration.id, 'dsh-plugin-composer-predict')
   const module = registration.factory((spec) => {
     assert.equal(spec, 'react')
     return React

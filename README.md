@@ -1,4 +1,4 @@
-# dsh-composer-predict
+# dsh-plugin-composer-predict
 
 DeepSeek Harness 插件：**根据当前对话预测你的下一条指令**，直接显示成输入框里的灰色占位文字，按 **Tab** 采纳为可编辑的草稿。
 
@@ -26,13 +26,13 @@ A DeepSeek Harness plugin that **predicts your next instruction** from the curre
 
 1. 在 DSH 中启用市场：设置 → 插件 → 启用实验性的 market bundle（当前版本默认关闭）。
 2. Discover → 添加索引地址：
-   `https://raw.githubusercontent.com/Dogtiti/dsh-composer-predict/main/market-index.json`
-3. 安装 `dsh-composer-predict`。
+   `https://raw.githubusercontent.com/Dogtiti/dsh-plugin-composer-predict/main/market-index.json`
+3. 安装 `dsh-plugin-composer-predict`。
 
 **本地目录 / git 安装**
 
 在 Plugins 页用"添加"，填入本地目录路径，或
-`git+https://github.com/Dogtiti/dsh-composer-predict.git#<commit>`。
+`git+https://github.com/Dogtiti/dsh-plugin-composer-predict.git#<commit>`。
 
 ### 配置
 
@@ -53,7 +53,7 @@ A DeepSeek Harness plugin that **predicts your next instruction** from the curre
 ```yaml
 - insert:
     - id: composer-predict
-      name: 'dsh-composer-predict'
+      name: 'dsh-plugin-composer-predict'
       config:
         model: deepseek-chat
         maxSuggestionChars: 24
@@ -92,8 +92,8 @@ When the composer is empty and the session is idle, the plugin reads the tail of
 ### Install
 
 Market index (recommended): enable the experimental market bundle, add
-`https://raw.githubusercontent.com/Dogtiti/dsh-composer-predict/main/market-index.json`
-in Discover, then install `dsh-composer-predict`.
+`https://raw.githubusercontent.com/Dogtiti/dsh-plugin-composer-predict/main/market-index.json`
+in Discover, then install `dsh-plugin-composer-predict`.
 
 Or install the bundle from this directory, or from a commit-pinned git spec.
 

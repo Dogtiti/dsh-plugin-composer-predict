@@ -8,7 +8,7 @@
  * nothing. Tab fills the prediction in as an ordinary editable draft either way.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-composer-predict',
+  id: 'dsh-plugin-composer-predict',
   factory(require) {
     const React = require('react')
     const h = React.createElement
