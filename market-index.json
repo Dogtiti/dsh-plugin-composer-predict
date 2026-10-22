@@ -80,6 +80,49 @@
           }
         }
       ]
+    },
+    {
+      "name": "dsh-plugin-composer-history",
+      "title": {
+        "en": "Composer History",
+        "zh": "输入框历史回溯"
+      },
+      "description": {
+        "en": "Shell-style prompt history: ArrowUp walks back through the messages this session already sent and fills the composer with them; ArrowDown walks forward and restores your draft at the end.",
+        "zh": "像终端一样回溯：输入框为空时按 ↑ 依次回填本会话发过的消息，按 ↓ 往前走，走到最新之后恢复你原来的草稿。"
+      },
+      "icon": "https://raw.githubusercontent.com/Dogtiti/dsh-plugin-composer-history/main/icon.svg",
+      "author": "Dogtiti",
+      "homepage": "https://github.com/Dogtiti/dsh-plugin-composer-history#readme",
+      "repository": {
+        "url": "https://github.com/Dogtiti/dsh-plugin-composer-history"
+      },
+      "metadata": {
+        "category": "composer",
+        "keywords": [
+          "composer",
+          "history",
+          "keyboard",
+          "arrow-keys",
+          "prompt-history"
+        ],
+        "labels": [],
+        "sortKeys": {
+          "stars": 0
+        }
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "publishTimestamp": 1792670040,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": "^0.2.1-0"
+          }
+        }
+      ]
     }
   ]
 }
