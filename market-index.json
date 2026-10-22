@@ -15,6 +15,12 @@
           "en": "Composer",
           "zh": "输入框"
         }
+      },
+      "agents": {
+        "title": {
+          "en": "Agent collaboration",
+          "zh": "智能体协作"
+        }
       }
     },
     "labels": {
@@ -115,6 +121,51 @@
         {
           "version": "1.0.0",
           "publishTimestamp": 1792670040,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": "^0.2.1-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-plugin-subagent-bridge",
+      "title": {
+        "en": "Subagent Bridge",
+        "zh": "子智能体桥"
+      },
+      "description": {
+        "en": "Lets Codex spawn DeepSeek Harness workers over a loopback MCP endpoint and collect their final answers, like native subagents; DSH agents can dispatch to Codex in return. Includes provider skills for both directions.",
+        "zh": "让 Codex 通过本机 MCP 把 DSH 当 subagent 用：spawn 一批 worker、等最终回答、支持 fork 既有会话做上下文；反向 also 让 DSH 把任务派给 Codex。附带两个方向的 skill。"
+      },
+      "icon": "https://raw.githubusercontent.com/Dogtiti/dsh-plugin-subagent-bridge/main/icon.svg",
+      "author": "Dogtiti",
+      "homepage": "https://github.com/Dogtiti/dsh-plugin-subagent-bridge#readme",
+      "repository": {
+        "url": "https://github.com/Dogtiti/dsh-plugin-subagent-bridge"
+      },
+      "metadata": {
+        "category": "agents",
+        "keywords": [
+          "mcp",
+          "subagent",
+          "codex",
+          "delegate",
+          "parallel"
+        ],
+        "labels": [
+          "extra-model-calls"
+        ],
+        "sortKeys": {
+          "stars": 0
+        }
+      },
+      "versions": [
+        {
+          "version": "0.5.0",
+          "publishTimestamp": 1792678520,
           "source": {
             "type": "npm"
           },
