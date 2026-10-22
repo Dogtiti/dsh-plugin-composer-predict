@@ -71,11 +71,9 @@
       "versions": [
         {
           "version": "1.0.0",
-          "publishTimestamp": 1792664287,
+          "publishTimestamp": 1792665068,
           "source": {
-            "type": "git",
-            "url": "https://github.com/Dogtiti/dsh-plugin-composer-predict",
-            "commit": "a4fbf220931025dd4a7a4ed9ad13804a457e077b"
+            "type": "npm"
           },
           "engines": {
             "dsh": "^0.2.1-0"

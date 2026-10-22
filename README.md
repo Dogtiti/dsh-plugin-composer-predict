@@ -29,10 +29,9 @@ A DeepSeek Harness plugin that **predicts your next instruction** from the curre
    `https://raw.githubusercontent.com/Dogtiti/dsh-plugin-composer-predict/main/market-index.json`
 3. 安装 `dsh-plugin-composer-predict`。
 
-**本地目录 / git 安装**
+**npm**
 
-在 Plugins 页用"添加"，填入本地目录路径，或
-`git+https://github.com/Dogtiti/dsh-plugin-composer-predict.git#<commit>`。
+包已发布到 npm：`dsh-plugin-composer-predict`（[npmjs.com](https://www.npmjs.com/package/dsh-plugin-composer-predict)）。在 Plugins 页用"添加"填包名即可，也可以本地目录 / `git+https://github.com/Dogtiti/dsh-plugin-composer-predict.git#<commit>` 安装。
 
 ### 配置
 
@@ -95,7 +94,7 @@ Market index (recommended): enable the experimental market bundle, add
 `https://raw.githubusercontent.com/Dogtiti/dsh-plugin-composer-predict/main/market-index.json`
 in Discover, then install `dsh-plugin-composer-predict`.
 
-Or install the bundle from this directory, or from a commit-pinned git spec.
+It is also on npm as `dsh-plugin-composer-predict`; add the package name, install from this directory, or use a commit-pinned git spec.
 
 ### Privacy and cost
 
