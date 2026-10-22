@@ -26,7 +26,7 @@ A DeepSeek Harness plugin that **predicts your next instruction** from the curre
 
 1. 在 DSH 中启用市场：设置 → 插件 → 启用实验性的 market bundle（当前版本默认关闭）。
 2. Discover → 添加索引地址：
-   `https://raw.githubusercontent.com/Dogtiti/dsh-composer-predict/master/market-index.json`
+   `https://raw.githubusercontent.com/Dogtiti/dsh-composer-predict/main/market-index.json`
 3. 安装 `dsh-composer-predict`。
 
 **本地目录 / git 安装**
@@ -92,7 +92,7 @@ When the composer is empty and the session is idle, the plugin reads the tail of
 ### Install
 
 Market index (recommended): enable the experimental market bundle, add
-`https://raw.githubusercontent.com/Dogtiti/dsh-composer-predict/master/market-index.json`
+`https://raw.githubusercontent.com/Dogtiti/dsh-composer-predict/main/market-index.json`
 in Discover, then install `dsh-composer-predict`.
 
 Or install the bundle from this directory, or from a commit-pinned git spec.
