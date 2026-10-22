@@ -1,0 +1,52 @@
+{
+  "name": "dsh-composer-predict",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Predicts your next instruction from the current conversation and shows it as the composer placeholder; press Tab to turn it into an editable draft.",
+  "keywords": [
+    "dsh-plugin",
+    "deepseek",
+    "harness",
+    "composer",
+    "prediction",
+    "autocomplete"
+  ],
+  "author": "Dogtiti",
+  "license": "MIT",
+  "homepage": "https://github.com/Dogtiti/dsh-composer-predict#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dogtiti/dsh-composer-predict"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg"
+  ],
+  "engines": {
+    "dsh": "^0.2.1-0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}

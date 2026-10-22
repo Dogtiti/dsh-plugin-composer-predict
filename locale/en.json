@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Composer Prediction",
+    "description": "Predicts the instruction you are most likely to send next from the current conversation and offers it under the composer. Press Tab to turn it into an editable draft."
+  }
+}
