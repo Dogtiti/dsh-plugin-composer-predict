@@ -21,6 +21,12 @@
           "en": "Agent collaboration",
           "zh": "智能体协作"
         }
+      },
+      "usage": {
+        "title": {
+          "en": "Usage & quota",
+          "zh": "用量与额度"
+        }
       }
     },
     "labels": {
@@ -166,6 +172,48 @@
         {
           "version": "0.7.1",
           "publishTimestamp": 1792681133,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": "^0.2.1-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-plugin-usage-panel",
+      "title": {
+        "en": "Usage Panel",
+        "zh": "用量面板"
+      },
+      "description": {
+        "en": "Shows how much of each provider quota window is left as a chip beside the model selector, with a detail popover: the 5-hour window, the weekly window, and tool-call usage for GLM Coding Plan today.",
+        "zh": "在模型选择器旁显示供应商套餐的额度余量，点开是明细浮层：5 小时窗口、每周窗口、工具调用用量（目前支持 GLM Coding Plan）。"
+      },
+      "icon": "https://raw.githubusercontent.com/Dogtiti/dsh-plugin-usage-panel/main/icon.svg",
+      "author": "Dogtiti",
+      "homepage": "https://github.com/Dogtiti/dsh-plugin-usage-panel#readme",
+      "repository": {
+        "url": "https://github.com/Dogtiti/dsh-plugin-usage-panel"
+      },
+      "metadata": {
+        "category": "usage",
+        "keywords": [
+          "usage",
+          "quota",
+          "glm",
+          "provider"
+        ],
+        "labels": [],
+        "sortKeys": {
+          "stars": 0
+        }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1792745854,
           "source": {
             "type": "npm"
           },
