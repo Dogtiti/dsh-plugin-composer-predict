@@ -194,8 +194,8 @@
         "zh": "用量面板"
       },
       "description": {
-        "en": "Shows how much of each provider quota window is left as a chip beside the model selector, with a detail popover: the 5-hour window, the weekly window, and tool-call usage for GLM Coding Plan today.",
-        "zh": "在模型选择器旁显示供应商套餐的额度余量，点开是明细浮层：5 小时窗口、每周窗口、工具调用用量（目前支持 GLM Coding Plan）。"
+        "en": "Shows how much of each provider quota window is left as a chip beside the model selector, with a detail popover: GLM Coding Plan (5-hour / weekly / tool calls) and OpenCode Zen (rolling / weekly / monthly), picked from the provider the session is actually running.",
+        "zh": "在模型选择器旁显示供应商套餐的额度余量，点开是明细浮层：GLM Coding Plan（5 小时 / 每周 / 工具调用）和 OpenCode Zen（滚动 / 每周 / 每月），按会话实际使用的供应商自动切换。"
       },
       "icon": "https://raw.githubusercontent.com/Dogtiti/dsh-plugin-usage-panel/main/icon.svg",
       "author": "Dogtiti",
@@ -209,6 +209,7 @@
           "usage",
           "quota",
           "glm",
+          "opencode",
           "provider"
         ],
         "labels": [],
@@ -218,8 +219,8 @@
       },
       "versions": [
         {
-          "version": "0.1.2",
-          "publishTimestamp": 1792748629,
+          "version": "0.2.0",
+          "publishTimestamp": 1792901418,
           "source": {
             "type": "npm"
           },
