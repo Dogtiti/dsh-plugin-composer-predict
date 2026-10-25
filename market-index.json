@@ -27,6 +27,12 @@
           "en": "Usage & quota",
           "zh": "用量与额度"
         }
+      },
+      "ui": {
+        "title": {
+          "en": "Interface",
+          "zh": "界面"
+        }
       }
     },
     "labels": {
@@ -214,6 +220,48 @@
         {
           "version": "0.1.2",
           "publishTimestamp": 1792748629,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": "^0.2.1-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-plugin-provider-icons",
+      "title": {
+        "en": "Provider Icons",
+        "zh": "供应商图标"
+      },
+      "description": {
+        "en": "Shows each provider brand mark beside the model name in the composer model selector: 24 vendors, prefix matching so split providers such as newapi-responses inherit their parent mark, grey dot otherwise.",
+        "zh": "在输入框的模型选择器里，模型名旁边显示供应商品牌 logo：覆盖 24 个厂商，支持前缀匹配（newapi-responses 这类拆出来的供应商自动继承父级图标），未收录的显示灰点。"
+      },
+      "icon": "https://raw.githubusercontent.com/Dogtiti/dsh-plugin-provider-icons/main/icon.svg",
+      "author": "Dogtiti",
+      "homepage": "https://github.com/Dogtiti/dsh-plugin-provider-icons#readme",
+      "repository": {
+        "url": "https://github.com/Dogtiti/dsh-plugin-provider-icons"
+      },
+      "metadata": {
+        "category": "ui",
+        "keywords": [
+          "icon",
+          "logo",
+          "provider",
+          "model"
+        ],
+        "labels": [],
+        "sortKeys": {
+          "stars": 0
+        }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1792899339,
           "source": {
             "type": "npm"
           },
