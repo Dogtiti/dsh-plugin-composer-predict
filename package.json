@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-composer-predict",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Predicts your next instruction from the current conversation and shows it as the composer placeholder; press Tab to turn it into an editable draft.",
   "keywords": [

@@ -172,3 +172,21 @@ node --test "test/*.test.mjs"
 ## 许可
 
 MIT © [Dogtiti](https://github.com/Dogtiti)
+
+## 诊断
+
+`diagnostics: true` 会把每次预测的决策写进包目录下的 `.diagnostics.jsonl`：
+
+```
+{"event":"predict-request","sessionId":"…","found":true,"transcriptLength":3217}
+{"event":"predict-done","sessionId":"…","suggestion":"跑一下测试","raw":"跑一下测试"}
+{"event":"predict-error","sessionId":"…","message":"…"}
+```
+
+用来回答"为什么输入框没有预测"：`found:false` = 会话没挂载；`transcriptLength` 太小 = 可参考的上下文太少；`suggestion:null` + `raw:"NONE"` = 模型判定无法预测。
+
+## 关于 `NONE`
+
+模型的默认倾向是"拿不准就说 NONE"，结果就是输入框长期没有预测。提示词因此改成：**只要对话里有任务上下文就必须给出一条**，`NONE` 只保留给"没有任何实质内容"的对话（比如只有问候）。
+
+实测同一个真实工作会话：旧提示词返回 `NONE`，新提示词返回「停止重复调用，改为汇总当前验证结果」。

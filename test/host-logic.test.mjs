@@ -157,3 +157,15 @@ test('honours an explicit model override and the disabled switch', async () => {
   assert.equal(response.status, 503)
   assert.equal(disabled.calls.streams, 0)
 })
+
+test('the prompt keeps NONE as a last resort, not an easy exit', async () => {
+  const { ctx, route, calls } = fakeHost()
+  apply(ctx, {})
+  await post(route, { sessionId: SESSION_ID })
+  const system = calls.requests[0].system
+  /* Offered an escape hatch, the model takes it and the composer stays silent. */
+  assert.match(system, /永远给出最佳猜测/)
+  assert.match(system, /只有当对话没有任何实质内容/)
+  assert.doesNotMatch(system, /如果确实无法预测/)
+  assert.match(calls.requests[0].messages[0].content[0].text, /只有对话没有任何实质内容时才输出 NONE/)
+})

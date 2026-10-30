@@ -72,6 +72,17 @@ export function apply(ctx, config = {}) {
 }
 
 /**
+ * Append one diagnostic line when `diagnostics` is on. Silent otherwise.
+ * @param settings - resolved plugin settings.
+ * @param row - fields to record.
+ */
+function trace(settings, row) {
+  if (settings.diagnostics !== true) return
+  const line = `${JSON.stringify({ time: new Date().toISOString(), ...row })}\n`
+  void appendFile(REPORT_FILE, line, 'utf8').catch(() => {})
+}
+
+/**
  * Append one client diagnostic line.
  * @param request - buffered Fetch request carrying the client snapshot.
  * @param settings - resolved plugin settings.
@@ -116,7 +127,10 @@ async function handle(ctx, request, settings, cache) {
   if (sessionId === '') return json(400, { suggestion: null, error: 'missing-session' })
 
   const session = safe(() => ctx.get('sessions')?.get?.(sessionId))
-  if (!session) return json(404, { suggestion: null, error: 'session-not-found' })
+  if (!session) {
+    trace(settings, { event: 'predict-request', sessionId, found: false })
+    return json(404, { suggestion: null, error: 'session-not-found' })
+  }
 
   const seq = Number(session.seq) || 0
   const cached = cache.get(sessionId)
@@ -131,6 +145,7 @@ async function handle(ctx, request, settings, cache) {
   if (!route) return json(503, { suggestion: null, error: 'model-unavailable' })
 
   const transcript = buildTranscript(session, settings)
+  trace(settings, { event: 'predict-request', sessionId, found: true, transcriptLength: transcript.length })
   if (transcript === '') return json(200, { suggestion: null })
 
   const controller = new AbortController()
@@ -152,9 +167,11 @@ async function handle(ctx, request, settings, cache) {
       else if (chunk?.type === 'finish' && chunk.reason?.kind !== 'stop') break
     }
     const suggestion = cleanSuggestion(text, settings)
+    trace(settings, { event: 'predict-done', sessionId, suggestion, raw: text.slice(0, 120) })
     remember(cache, sessionId, { seq, suggestion, time: Date.now() })
     return json(200, { suggestion })
   } catch (error) {
+    trace(settings, { event: 'predict-error', sessionId, message: messageOf(error) })
     return json(200, { suggestion: null, error: messageOf(error) })
   } finally {
     clearTimeout(timer)
@@ -232,7 +249,7 @@ function buildTranscript(session, settings) {
   const tail = lines.slice(-Math.max(1, settings.maxContextMessages))
   const cwd = safe(() => session.header?.cwd)
   const where = typeof cwd === 'string' && cwd !== '' ? `工作目录：${cwd}\n\n` : ''
-  return `${where}对话尾部：\n${tail.join('\n')}\n\n请只输出用户的下一条指令，或 NONE。`
+  return `${where}对话尾部：\n${tail.join('\n')}\n\n请只输出用户的下一条指令。只有对话没有任何实质内容时才输出 NONE。`
 }
 
 /**
@@ -252,7 +269,8 @@ function systemPrompt(settings) {
     '- 只输出指令本身：不要引号、不要编号、不要句末句号、不要解释、不要换行。',
     '- 给出紧接着的下一步：运行或验证、修复报错、补充测试、继续实现、调整样式、打开结果。',
     '- 不要复述用户上一句，也不要给出与当前任务无关的通用建议。',
-    '- 如果确实无法预测，只输出 NONE。',
+    '- 永远给出最佳猜测：只要对话里有任务上下文，就输出一条你认为最可能的指令。',
+    '- 只有当对话没有任何实质内容（例如只有问候）时才输出 NONE。',
   ].join('\n')
 }
 
