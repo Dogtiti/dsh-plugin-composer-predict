@@ -164,8 +164,18 @@ test('the prompt keeps NONE as a last resort, not an easy exit', async () => {
   await post(route, { sessionId: SESSION_ID })
   const system = calls.requests[0].system
   /* Offered an escape hatch, the model takes it and the composer stays silent. */
-  assert.match(system, /永远给出最佳猜测/)
-  assert.match(system, /只有当对话没有任何实质内容/)
-  assert.doesNotMatch(system, /如果确实无法预测/)
-  assert.match(calls.requests[0].messages[0].content[0].text, /只有对话没有任何实质内容时才输出 NONE/)
+  /* The model must be told to stay silent, not to write a placeholder word: a lone
+   * "NONE" is noise the composer would have to filter anyway. */
+  assert.match(system, /没有具体任务/)
+  assert.match(system, /什么\S*都不要输出|什么都不输出/)
+  assert.doesNotMatch(system, /只输出 NONE/)
+  assert.match(calls.requests[0].messages[0].content[0].text, /没有就什么都不输出/)
+})
+
+test('a model that writes "nothing" in words is treated as no suggestion', async () => {
+  for (const reply of ['NONE', '无', '什么都不输出', '空回复']) {
+    const { ctx, route } = fakeHost({ reply })
+    apply(ctx, {})
+    assert.deepEqual(await (await post(route, { sessionId: SESSION_ID })).json(), { suggestion: null }, reply)
+  }
 })

@@ -249,7 +249,7 @@ function buildTranscript(session, settings) {
   const tail = lines.slice(-Math.max(1, settings.maxContextMessages))
   const cwd = safe(() => session.header?.cwd)
   const where = typeof cwd === 'string' && cwd !== '' ? `工作目录：${cwd}\n\n` : ''
-  return `${where}对话尾部：\n${tail.join('\n')}\n\n请只输出用户的下一条指令。只有对话没有任何实质内容时才输出 NONE。`
+  return `${where}对话尾部：\n${tail.join('\n')}\n\n请只输出用户的下一条指令；没有就什么都不输出。`
 }
 
 /**
@@ -269,8 +269,9 @@ function systemPrompt(settings) {
     '- 只输出指令本身：不要引号、不要编号、不要句末句号、不要解释、不要换行。',
     '- 给出紧接着的下一步：运行或验证、修复报错、补充测试、继续实现、调整样式、打开结果。',
     '- 不要复述用户上一句，也不要给出与当前任务无关的通用建议。',
-    '- 永远给出最佳猜测：只要对话里有任务上下文，就输出一条你认为最可能的指令。',
-    '- 只有当对话没有任何实质内容（例如只有问候）时才输出 NONE。',
+    '- 只要对话里有具体的任务上下文，就给出你认为最可能的一条指令。',
+    '- 对话里没有具体任务（例如只有问候、闲聊、或话题刚结束）时，什么都不要输出，不要编造任务。',
+    '- 不要输出 NONE、无、N/A 之类的占位字样。',
   ].join('\n')
 }
 
@@ -292,7 +293,8 @@ function cleanSuggestion(text, settings) {
     .replace(/^["'“”‘’`「」《》]+|["'“”‘’`「」《》]+$/gu, '')
     .trim()
   if (value === '') return null
-  if (/^(none|n\/a|无|没有|无法预测)$/iu.test(value)) return null
+  /* A model told to stay silent sometimes writes "nothing" as words instead. */
+  if (/^(none|n\/a|无|没有|无法预测|什么都不输出|不输出|空回复|空)$/iu.test(value)) return null
   const cap = Math.max(8, settings.maxSuggestionChars * 3)
   if (value.length > cap) value = value.slice(0, cap)
   return value
