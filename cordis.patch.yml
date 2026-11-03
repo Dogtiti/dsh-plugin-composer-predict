@@ -1,6 +1,6 @@
 - insert:
     - id: composer-predict
-      name: 'dsh-plugin-composer-predict'
+      name: 'dsh-predict'
       config:
         maxContextMessages: 8
         maxSuggestionChars: 32

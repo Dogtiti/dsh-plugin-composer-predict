@@ -1,6 +1,6 @@
 {
-  "name": "dsh-plugin-composer-predict",
-  "version": "1.1.1",
+  "name": "dsh-predict",
+  "version": "1.2.0",
   "type": "module",
   "description": "Predicts your next instruction from the current conversation and shows it as the composer placeholder; press Tab to turn it into an editable draft.",
   "keywords": [
@@ -13,10 +13,10 @@
   ],
   "author": "Dogtiti",
   "license": "MIT",
-  "homepage": "https://github.com/Dogtiti/dsh-plugin-composer-predict#readme",
+  "homepage": "https://github.com/Dogtiti/dsh-predict#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Dogtiti/dsh-plugin-composer-predict"
+    "url": "https://github.com/Dogtiti/dsh-predict"
   },
   "exports": {
     ".": "./index.js",
@@ -48,5 +48,8 @@
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
     }
+  },
+  "bugs": {
+    "url": "https://github.com/Dogtiti/dsh-predict/issues"
   }
 }

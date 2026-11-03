@@ -1,6 +1,6 @@
-# dsh-plugin-composer-predict
+# dsh-predict
 
-[![npm](https://img.shields.io/npm/v/dsh-plugin-composer-predict?label=npm&color=2f6fed)](https://www.npmjs.com/package/dsh-plugin-composer-predict)
+[![npm](https://img.shields.io/npm/v/dsh-predict?label=npm&color=2f6fed)](https://www.npmjs.com/package/dsh-predict)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![dsh](https://img.shields.io/badge/DSH-%5E0.2.1--0-2f6fed)](https://github.com/deepseek-ai/deepseek-harness)
 
@@ -33,15 +33,15 @@
 **市场索引**
 
 ```
-https://raw.githubusercontent.com/Dogtiti/dsh-plugin-composer-predict/main/market-index.json
+https://raw.githubusercontent.com/Dogtiti/dsh-predict/main/market-index.json
 ```
 
-设置 → 插件 → 启用实验性市场 bundle → Discover → 添加上面的地址 → 安装 `dsh-plugin-composer-predict`。
+设置 → 插件 → 启用实验性市场 bundle → Discover → 添加上面的地址 → 安装 `dsh-predict`。
 
 **npm**
 
 ```bash
-npm i dsh-plugin-composer-predict
+npm i dsh-predict
 ```
 
 在 Plugins 页用「添加」填写包名。
@@ -49,7 +49,7 @@ npm i dsh-plugin-composer-predict
 **本地目录**
 
 ```bash
-git clone https://github.com/Dogtiti/dsh-plugin-composer-predict
+git clone https://github.com/Dogtiti/dsh-predict
 ```
 
 Plugins → 添加 → 选择该目录。
@@ -80,7 +80,7 @@ Plugins → 添加 → 选择该目录。
 ```yaml
 - insert:
     - id: composer-predict
-      name: 'dsh-plugin-composer-predict'
+      name: 'dsh-predict'
       config:
         model: deepseek-chat
         maxSuggestionChars: 24
@@ -162,7 +162,7 @@ node --test "test/*.test.mjs"
 
 | 插件 | 说明 |
 | --- | --- |
-| **dsh-plugin-composer-predict**（本仓库） | 预测下一条指令并显示为占位文字，`Tab` 采纳 |
+| **dsh-predict**（本仓库） | 预测下一条指令并显示为占位文字，`Tab` 采纳 |
 | [dsh-plugin-composer-history](https://github.com/Dogtiti/dsh-plugin-composer-history) | 输入框中按 `↑` / `↓` 回填历史消息 |
 | [dsh-plugin-subagent-bridge](https://github.com/Dogtiti/dsh-plugin-subagent-bridge) | 让 Codex 通过本机 MCP 把 DSH 当 subagent 用（spawn / wait / followup），反向也能把任务派给 Codex |
 | [dsh-plugin-usage-panel](https://github.com/Dogtiti/dsh-plugin-usage-panel) | 在模型选择器旁显示供应商套餐额度余量（目前 GLM Coding Plan），点开是明细浮层 |
