@@ -55,7 +55,7 @@
   },
   "plugins": [
     {
-      "name": "dsh-plugin-composer-predict",
+      "name": "dsh-predict",
       "title": {
         "en": "Composer Prediction",
         "zh": "下一步指令建议"
@@ -84,12 +84,13 @@
         ],
         "sortKeys": {
           "stars": 0
-        }
+        },
+        "homepage": "https://github.com/Dogtiti/dsh-predict"
       },
       "versions": [
         {
-          "version": "1.1.1",
-          "publishTimestamp": 1793332973,
+          "version": "1.2.0",
+          "publishTimestamp": 1793688573,
           "source": {
             "type": "npm"
           },
@@ -100,7 +101,7 @@
       ]
     },
     {
-      "name": "dsh-plugin-composer-history",
+      "name": "dsh-input-history",
       "title": {
         "en": "Composer History",
         "zh": "输入框历史回溯"
@@ -127,12 +128,13 @@
         "labels": [],
         "sortKeys": {
           "stars": 0
-        }
+        },
+        "homepage": "https://github.com/Dogtiti/dsh-input-history"
       },
       "versions": [
         {
-          "version": "1.0.0",
-          "publishTimestamp": 1792670040,
+          "version": "1.1.0",
+          "publishTimestamp": 1793688573,
           "source": {
             "type": "npm"
           },
@@ -191,7 +193,7 @@
       ]
     },
     {
-      "name": "dsh-plugin-usage-panel",
+      "name": "dsh-quota-meter",
       "title": {
         "en": "Usage Panel",
         "zh": "用量面板"
@@ -218,12 +220,13 @@
         "labels": [],
         "sortKeys": {
           "stars": 0
-        }
+        },
+        "homepage": "https://github.com/Dogtiti/dsh-quota-meter"
       },
       "versions": [
         {
-          "version": "0.2.2",
-          "publishTimestamp": 1792980645,
+          "version": "0.3.0",
+          "publishTimestamp": 1793688573,
           "source": {
             "type": "npm"
           },
@@ -234,7 +237,7 @@
       ]
     },
     {
-      "name": "dsh-plugin-provider-icons",
+      "name": "dsh-provider-icons",
       "title": {
         "en": "Provider Icons",
         "zh": "供应商图标"
@@ -260,12 +263,13 @@
         "labels": [],
         "sortKeys": {
           "stars": 0
-        }
+        },
+        "homepage": "https://github.com/Dogtiti/dsh-provider-icons"
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1792899339,
+          "version": "0.2.0",
+          "publishTimestamp": 1793688573,
           "source": {
             "type": "npm"
           },
