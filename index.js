@@ -114,17 +114,26 @@ async function report(request, settings) {
  * @returns a JSON response; transport failures never surface as 500.
  */
 async function handle(ctx, request, settings, cache) {
-  if (!settings.enabled) return json(503, { suggestion: null, error: 'disabled' })
+  /* Every early exit is traced, so a silent "no suggestion" can be attributed instead of
+   * guessed at from the client side. */
+  if (!settings.enabled) {
+    trace(settings, { event: 'predict-skip', reason: 'disabled' })
+    return json(503, { suggestion: null, error: 'disabled' })
+  }
 
   let payload
   try {
     payload = await request.json()
   } catch {
+    trace(settings, { event: 'predict-skip', reason: 'invalid-body' })
     return json(400, { suggestion: null, error: 'invalid-body' })
   }
 
   const sessionId = typeof payload?.sessionId === 'string' ? payload.sessionId : ''
-  if (sessionId === '') return json(400, { suggestion: null, error: 'missing-session' })
+  if (sessionId === '') {
+    trace(settings, { event: 'predict-skip', reason: 'missing-session' })
+    return json(400, { suggestion: null, error: 'missing-session' })
+  }
 
   const session = safe(() => ctx.get('sessions')?.get?.(sessionId))
   if (!session) {
@@ -139,13 +148,19 @@ async function handle(ctx, request, settings, cache) {
   }
 
   const llm = safe(() => ctx.get('llm'))
-  if (!llm) return json(503, { suggestion: null, error: 'llm-unavailable' })
+  if (!llm) {
+    trace(settings, { event: 'predict-skip', reason: 'llm-unavailable' })
+    return json(503, { suggestion: null, error: 'llm-unavailable' })
+  }
 
   const route = resolveRoute(ctx, session, settings)
-  if (!route) return json(503, { suggestion: null, error: 'model-unavailable' })
+  if (!route) {
+    trace(settings, { event: 'predict-skip', reason: 'model-unavailable' })
+    return json(503, { suggestion: null, error: 'model-unavailable' })
+  }
 
   const transcript = buildTranscript(session, settings)
-  trace(settings, { event: 'predict-request', sessionId, found: true, transcriptLength: transcript.length })
+  trace(settings, { event: 'predict-request', sessionId, found: true, route, transcriptLength: transcript.length })
   if (transcript === '') return json(200, { suggestion: null })
 
   const controller = new AbortController()
