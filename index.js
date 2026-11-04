@@ -29,7 +29,7 @@ const DEFAULTS = {
   maxContextMessages: 8,
   maxMessageChars: 600,
   maxSuggestionChars: 32,
-  maxTokens: 200,
+  maxTokens: 512,
   timeoutMs: 20000,
   cacheTtlMs: 60000,
   provider: '',
@@ -169,20 +169,38 @@ async function handle(ctx, request, settings, cache) {
   request.signal?.addEventListener('abort', abort)
   try {
     let text = ''
-    const stream = llm.stream({
-      provider: route.provider,
-      model: route.model,
-      system: systemPrompt(settings),
-      messages: [{ role: 'user', content: [{ type: 'text', text: transcript }] }],
-      maxTokens: settings.maxTokens,
-      signal: controller.signal,
-    })
+    const finish = []
+    /* A reasoning model spends the token budget on reasoning first, so a 200-token cap can
+     * produce a clean, empty answer. Prepare the call the way the harness does and ask for
+     * the lowest reasoning effort the model offers. */
+    const prepared = typeof llm.prepareCall === 'function'
+      ? await llm.prepareCall({ provider: route.provider, model: route.model, maxTokens: settings.maxTokens }, controller.signal, (controls, model) => {
+          const levels = model?.reasoningEfforts
+          const effort = levels !== undefined && Object.hasOwn(levels, 'off') ? 'off' : undefined
+          return { ...controls, ...(effort === undefined ? {} : { reasoningEffort: effort }) }
+        })
+      : undefined
+    const options = prepared === undefined
+      ? { provider: route.provider, model: route.model, system: systemPrompt(settings), messages: [{ role: 'user', content: [{ type: 'text', text: transcript }] }], maxTokens: settings.maxTokens, signal: controller.signal }
+      : { ...prepared.config, system: systemPrompt(settings), messages: [{ role: 'user', content: [{ type: 'text', text: transcript }] }], signal: controller.signal }
+    const stream = prepared === undefined ? llm.stream(options) : prepared.stream(options)
     for await (const chunk of stream) {
       if (chunk?.type === 'text-delta' && typeof chunk.text === 'string') text += chunk.text
-      else if (chunk?.type === 'finish' && chunk.reason?.kind !== 'stop') break
+      else if (chunk?.type === 'finish') {
+        finish.push(chunk.reason?.kind ?? 'unknown')
+        if (chunk.reason?.kind !== 'stop') break
+      }
     }
     const suggestion = cleanSuggestion(text, settings)
-    trace(settings, { event: 'predict-done', sessionId, suggestion, raw: text.slice(0, 120) })
+    trace(settings, {
+      event: 'predict-done',
+      sessionId,
+      suggestion,
+      raw: text.slice(0, 120),
+      finish,
+      reasoningEffort: prepared?.config?.reasoningEffort ?? null,
+      maxTokens: settings.maxTokens,
+    })
     remember(cache, sessionId, { seq, suggestion, time: Date.now() })
     return json(200, { suggestion })
   } catch (error) {
