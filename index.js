@@ -170,24 +170,38 @@ async function handle(ctx, request, settings, cache) {
   try {
     let text = ''
     const finish = []
-    /* A reasoning model spends the token budget on reasoning first, so a 200-token cap can
-     * produce a clean, empty answer. Prepare the call the way the harness does and ask for
-     * the lowest reasoning effort the model offers. */
-    const prepared = typeof llm.prepareCall === 'function'
-      ? await llm.prepareCall({ provider: route.provider, model: route.model, maxTokens: settings.maxTokens }, controller.signal, (controls, model) => {
-          const levels = model?.reasoningEfforts
-          const effort = levels !== undefined && Object.hasOwn(levels, 'off') ? 'off' : undefined
-          return { ...controls, ...(effort === undefined ? {} : { reasoningEffort: effort }) }
-        })
-      : undefined
-    const options = prepared === undefined
-      ? { provider: route.provider, model: route.model, system: systemPrompt(settings), messages: [{ role: 'user', content: [{ type: 'text', text: transcript }] }], maxTokens: settings.maxTokens, signal: controller.signal }
-      : { ...prepared.config, system: systemPrompt(settings), messages: [{ role: 'user', content: [{ type: 'text', text: transcript }] }], signal: controller.signal }
-    const stream = prepared === undefined ? llm.stream(options) : prepared.stream(options)
+    /* The service signature is prepareCall(provider, model, signal); it returns the resolved
+     * model plus a stream bound to that one generation. Reading the resolved model is how we
+     * learn whether a reasoning effort can be asked for at all. */
+    let resolved
+    try {
+      resolved = typeof llm.prepareCall === 'function' ? await llm.prepareCall(route.provider, route.model, controller.signal) : undefined
+    } catch {
+      resolved = undefined
+    }
+    const levels = resolved?.model?.reasoningEfforts
+    const effort = levels !== undefined && levels !== null && Object.hasOwn(levels, 'off') ? 'off' : undefined
+    const callOptions = {
+      provider: route.provider,
+      model: route.model,
+      system: systemPrompt(settings),
+      messages: [{ role: 'user', content: [{ type: 'text', text: transcript }] }],
+      maxTokens: settings.maxTokens,
+      sessionId,
+      purpose: 'composer-predict',
+      signal: controller.signal,
+      ...(effort === undefined ? {} : { reasoningEffort: effort }),
+    }
+    const stream = resolved?.stream === undefined ? llm.stream(callOptions) : resolved.stream(callOptions)
+    const kinds = {}
+    let reasoningChars = 0
     for await (const chunk of stream) {
+      if (typeof chunk?.type === 'string') kinds[chunk.type] = (kinds[chunk.type] ?? 0) + 1
+      if (typeof chunk?.type === 'string' && chunk.type.includes('reasoning') && typeof chunk.text === 'string') reasoningChars += chunk.text.length
       if (chunk?.type === 'text-delta' && typeof chunk.text === 'string') text += chunk.text
       else if (chunk?.type === 'finish') {
         finish.push(chunk.reason?.kind ?? 'unknown')
+        if (chunk.reason?.error !== undefined) finish.push(String(chunk.reason.error?.message ?? chunk.reason.error))
         if (chunk.reason?.kind !== 'stop') break
       }
     }
@@ -198,7 +212,10 @@ async function handle(ctx, request, settings, cache) {
       suggestion,
       raw: text.slice(0, 120),
       finish,
-      reasoningEffort: prepared?.config?.reasoningEffort ?? null,
+      kinds,
+      reasoningChars,
+      reasoningEffort: effort ?? null,
+      effortLevels: levels === undefined || levels === null ? null : Object.keys(levels),
       maxTokens: settings.maxTokens,
     })
     remember(cache, sessionId, { seq, suggestion, time: Date.now() })
